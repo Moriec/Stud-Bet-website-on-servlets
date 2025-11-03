@@ -2,7 +2,7 @@ package com.studbet.model;
 
 import java.time.LocalDateTime;
 
-public class Betting_Event {
+public class BettingEvent {
     private int id;
     private int targetUserId;
     private int subjectId;
@@ -13,10 +13,10 @@ public class Betting_Event {
     private LocalDateTime createdAt;
     private LocalDateTime closedIt;
 
-    public Betting_Event() {
+    public BettingEvent() {
     }
 
-    public Betting_Event(int targetUserId, int subjectId, int semestr, String academicYear, String eventType, String status) {
+    public BettingEvent(int targetUserId, int subjectId, int semestr, String academicYear, String eventType, String status) {
         this.targetUserId = targetUserId;
         this.subjectId = subjectId;
         this.semestr = semestr;
@@ -25,7 +25,7 @@ public class Betting_Event {
         Status = status;
     }
 
-    public Betting_Event(int id, int targetUserId, int subjectId, int semestr, String academicYear, String eventType, String status, LocalDateTime createdAt, LocalDateTime closedIt) {
+    public BettingEvent(int id, int targetUserId, int subjectId, int semestr, String academicYear, String eventType, String status, LocalDateTime createdAt, LocalDateTime closedIt) {
         this.id = id;
         this.targetUserId = targetUserId;
         this.subjectId = subjectId;

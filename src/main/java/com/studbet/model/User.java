@@ -18,12 +18,12 @@ public class User {
     public User() {
     }
 
-    public User(String username, String email, String password, String role, int balance) {
+    public User(String username, String email, String password, String role) {
         this.username = username;
         this.email = email;
         this.password = password;
         this.role = role;
-        this.balance = balance;
+        this.balance = 1000;
     }
 
     public User(int id, String username, String email, String firstname, String lastname, String password, String role, int balance, int ratingPoints, LocalDateTime registrationDate, LocalDateTime lastLoginDate) {
