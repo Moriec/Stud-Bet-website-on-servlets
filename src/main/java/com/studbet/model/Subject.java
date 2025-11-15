@@ -11,6 +11,7 @@ public class Subject {
         this.name = name;
         this.code = code;
         this.description = description;
+        this.maxScore = 100;
     }
 
     public Subject(String name, String code, String description, int maxScore) {

@@ -398,6 +398,8 @@
 
                     <div class="signup-login-link">
                         Уже есть аккаунт? <a href="login">Войти</a>
+                        <span style="margin: 0 8px; color: var(--text-secondary);">•</span>
+                        <a href=".">На главную</a>
                     </div>
                 </form>
             </div>

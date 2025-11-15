@@ -37,6 +37,16 @@ public class Transaction {
         this.createdAt = createdAt;
     }
 
+    public Transaction(int userId, int relatedBetId, String transactionType, int amount, int balanceBefore, int balanceAfter, String description) {
+        this.userId = userId;
+        this.relatedBetId = relatedBetId;
+        this.transactionType = transactionType;
+        this.amount = amount;
+        this.balanceBefore = balanceBefore;
+        this.balanceAfter = balanceAfter;
+        this.description = description;
+    }
+
     public int getId() {
         return id;
     }

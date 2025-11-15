@@ -22,6 +22,15 @@ public class StudentResult {
         this.isFinelized = isFinelized;
     }
 
+    public StudentResult(int userId, int subjectId, int actualScore, int semestr, String academicYear, boolean isFinelized) {
+        this.userId = userId;
+        this.subjectId = subjectId;
+        this.actualScore = actualScore;
+        this.semestr = semestr;
+        this.academicYear = academicYear;
+        this.isFinelized = isFinelized;
+    }
+
     public int getResultId() {
         return resultId;
     }
