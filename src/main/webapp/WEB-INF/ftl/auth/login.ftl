@@ -445,9 +445,9 @@
 
                     <!-- Ссылки внизу -->
                     <div class="login-footer-links">
-                        <a href="forgot-password">Забыл пароль?</a>
-                        <span class="login-divider">•</span>
                         <a href="sign_up">Зарегистрироваться</a>
+                        <span class="login-divider">•</span>
+                        <a href=".">На главную</a>
                     </div>
                 </form>
             </div>
