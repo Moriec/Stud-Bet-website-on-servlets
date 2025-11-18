@@ -101,7 +101,7 @@
         </div>
     </#if>
 
-    <form method="POST" action="/admin/create-subject">
+    <form method="POST">
         <div class="form-group">
             <label for="name">Название предмета *</label>
             <input type="text" id="name" name="name" required maxlength="255">
