@@ -1,8 +1,7 @@
 package com.studbet.servlet.main;
 
-import com.studbet.service.auth.LoginService;
+import com.studbet.service.main.MainPageService;
 import com.studbet.service.session.SessionService;
-import com.studbet.util.validate.UserValidate;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -17,10 +16,12 @@ public class MainPageServlet extends HttpServlet {
     private static final String LOGIN_FTL_PATH = "WEB-INF/ftl/main.ftl";
 
     private SessionService sessionService;
+    private MainPageService mainPageService;
 
     @Override
     public void init(){
         sessionService = (SessionService) getServletContext().getAttribute("sessionService");
+        mainPageService = (MainPageService) getServletContext().getAttribute("mainPageService");
     }
 
     @Override
@@ -28,6 +29,9 @@ public class MainPageServlet extends HttpServlet {
         if(sessionService.getUserSession(req) != null){
             req.setAttribute("user", sessionService.getUserSession(req));
         }
+        
+        req.setAttribute("bettingEvents", mainPageService.getAviableBettingEvents());
+        
         req.getRequestDispatcher(LOGIN_FTL_PATH).forward(req, resp);
     }
 }

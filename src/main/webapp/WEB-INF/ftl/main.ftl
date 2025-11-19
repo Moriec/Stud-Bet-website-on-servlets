@@ -370,7 +370,7 @@
 <body>
 <!-- Header -->
 <header class="header">
-    <a href="/" class="header-brand">StudBet</a>
+    <a href="" class="header-brand">StudBet</a>
     <div class="header-left">
 
         <nav class="header-nav">
@@ -401,60 +401,20 @@
     <h1 class="page-title">Доступные ставки</h1>
     <p class="page-subtitle">Делай ставки на результаты экзаменов и зарабатывай StudCoins!</p>
 
-    <#if events?? && (events?size > 0)>
-        <!-- Bet Cards Grid -->
-        <div class="bet-cards-grid">
-            <#list events as event>
-                <div class="bet-card">
-                    <!-- Card Header with User Info and Odds -->
-                    <div class="bet-card-header">
-                        <div class="user-info">
-                            <img src="${event.targetUser.avatar!'/static/img/avatar-placeholder.png'}" alt="Avatar">
-                            <div>
-                                <h4>${event.targetUser.firstName} ${event.targetUser.lastName}</h4>
-                                <small>@${event.targetUser.username}</small>
-                            </div>
+    <#if bettingEvents?? && (bettingEvents?size > 0)>
+        <!-- Events List -->
+        <div style="display: flex; flex-direction: column; gap: 16px;">
+            <#list bettingEvents as event>
+                <a href="betting-event?id=${event.id}" style="text-decoration: none; color: inherit; display: block;">
+                    <div class="bet-card" style="cursor: pointer;">
+                        <div class="subject-info">
+                            <h4>${event.eventType}</h4>
+                            <p style="margin: 8px 0 0 0; color: var(--text-secondary); font-size: 14px;">
+                                Семестр ${event.semestr} • ${event.academicYear}
+                            </p>
                         </div>
-                        <div class="bet-card-odds">${event.odds?string["0.00"]}</div>
                     </div>
-
-                    <!-- Subject Info -->
-                    <div class="subject-info">
-                        <h4>${event.subject.name}</h4>
-                        <small>Семестр ${event.semester} • ${event.academicYear}</small>
-                    </div>
-
-                    <!-- Event Details -->
-                    <div class="bet-card-body">
-                        <p><strong>Тип события:</strong> ${event.eventType}</p>
-                        <p><strong>Дата:</strong> ${event.eventDate?string["dd.MM.yyyy HH:mm"]}</p>
-                        <#if event.status == "OPEN">
-                            <span class="badge badge-open">Открыто</span>
-                        <#else>
-                            <span class="badge badge-closed">Закрыто</span>
-                        </#if>
-                    </div>
-
-                    <!-- Action Buttons -->
-                    <#if event.status == "OPEN" && user??>
-                        <div class="bet-card-action">
-                            <form method="GET" action="${ctx!''}/bet/create" style="flex: 1; margin: 0;">
-                                <input type="hidden" name="eventId" value="${event.eventId}">
-                                <button type="submit" class="btn-primary">Сделать ставку</button>
-                            </form>
-                            <form method="GET" action="${ctx!''}/bet/view" style="flex: 1; margin: 0;">
-                                <input type="hidden" name="eventId" value="${event.eventId}">
-                                <button type="submit" class="btn-secondary">Подробнее</button>
-                            </form>
-                        </div>
-                    <#elseif event.status == "OPEN">
-                        <div class="bet-card-action">
-                            <a href="login" class="btn-primary" style="text-align: center; display: block; text-decoration: none; line-height: 16px;">
-                                Войти для ставки
-                            </a>
-                        </div>
-                    </#if>
-                </div>
+                </a>
             </#list>
         </div>
     <#else>

@@ -10,8 +10,8 @@ import com.studbet.service.auth.RegistrationService;
 import com.studbet.service.auth.impl.CheckLoginServiceImpl;
 import com.studbet.service.auth.impl.LoginServiceImpl;
 import com.studbet.service.auth.impl.RegistrationServiceImpl;
-import com.studbet.service.entity.SubjectService;
-import com.studbet.service.entity.impl.SubjectServiceImpl;
+import com.studbet.service.entity.*;
+import com.studbet.service.entity.impl.*;
 import com.studbet.service.main.MainPageService;
 import com.studbet.service.main.impl.MainPageServiceImpl;
 import com.studbet.service.session.SessionService;
@@ -53,6 +53,8 @@ public class AppContextListener implements ServletContextListener {
         SubjectDao subjectDao = new SubjectDaoImpl(dataSource);
         TransactionDao transactionDao = new TransactionDaoImpl(dataSource);
         UserAchievementDao userAchievementDao = new UserAchievementDaoImpl(dataSource);
+        
+        //sce.getServletContext().setAttribute("subjectDao", subjectDao);
 
         //utils
         PasswordEncrypt passwordEncrypt = new PasswordEncryptBCrypt();
@@ -70,12 +72,24 @@ public class AppContextListener implements ServletContextListener {
         sce.getServletContext().setAttribute("checkLoginService", checkLoginService);
 
         //main page service
-        MainPageService mainPageService = new MainPageServiceImpl(bettingEventDao);
+        MainPageService mainPageService = new MainPageServiceImpl(bettingEventDao, subjectDao);
         sce.getServletContext().setAttribute("mainPageService", mainPageService);
 
         //admin service
         SubjectService subjectService = new SubjectServiceImpl(subjectDao);
         sce.getServletContext().setAttribute("subjectService", subjectService);
+        
+        UserService userService = new UserServiceImpl(userDao, passwordEncrypt);
+        sce.getServletContext().setAttribute("userService", userService);
+        
+        AchievementService achievementService = new AchievementServiceImpl(achevementsDao);
+        sce.getServletContext().setAttribute("achievementService", achievementService);
+        
+        BettingEventService bettingEventService = new BettingEventServiceImpl(bettingEventDao);
+        sce.getServletContext().setAttribute("bettingEventService", bettingEventService);
+        
+        StudentResultService studentResultService = new StudentResultServiceImpl(studentResultDao);
+        sce.getServletContext().setAttribute("studentResultService", studentResultService);
 
 
 
