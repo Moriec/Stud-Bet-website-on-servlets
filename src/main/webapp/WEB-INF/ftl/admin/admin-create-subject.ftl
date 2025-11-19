@@ -101,7 +101,7 @@
         </div>
     </#if>
 
-    <form method="POST">
+    <form method="POST" accept-charset="UTF-8">
         <div class="form-group">
             <label for="name">Название предмета *</label>
             <input type="text" id="name" name="name" required maxlength="255">
