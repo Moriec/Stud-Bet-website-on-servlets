@@ -10,22 +10,24 @@ public class BettingEvent {
     private String academicYear;
     private String eventType;
     private String Status;
+    private String description;
     private LocalDateTime createdAt;
     private LocalDateTime closedIt;
 
     public BettingEvent() {
     }
 
-    public BettingEvent(int targetUserId, int subjectId, int semestr, String academicYear, String eventType, String status) {
+    public BettingEvent(int targetUserId, int subjectId, int semestr, String academicYear, String eventType, String status, String description) {
         this.targetUserId = targetUserId;
         this.subjectId = subjectId;
         this.semestr = semestr;
         this.academicYear = academicYear;
         this.eventType = eventType;
         Status = status;
+        this.description = description;
     }
 
-    public BettingEvent(int id, int targetUserId, int subjectId, int semestr, String academicYear, String eventType, String status, LocalDateTime createdAt, LocalDateTime closedIt) {
+    public BettingEvent(int id, int targetUserId, int subjectId, int semestr, String academicYear, String eventType, String status, String description, LocalDateTime createdAt, LocalDateTime closedIt) {
         this.id = id;
         this.targetUserId = targetUserId;
         this.subjectId = subjectId;
@@ -33,6 +35,7 @@ public class BettingEvent {
         this.academicYear = academicYear;
         this.eventType = eventType;
         Status = status;
+        this.description = description;
         this.createdAt = createdAt;
         this.closedIt = closedIt;
     }
@@ -109,6 +112,14 @@ public class BettingEvent {
         this.closedIt = closedIt;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     @Override
     public String toString() {
         return "Betting_Event{" +
@@ -119,6 +130,7 @@ public class BettingEvent {
                 ", academicYear='" + academicYear + '\'' +
                 ", eventType='" + eventType + '\'' +
                 ", Status='" + Status + '\'' +
+                ", description='" + description + '\'' +
                 ", createdAt=" + createdAt +
                 ", closedIt=" + closedIt +
                 '}';

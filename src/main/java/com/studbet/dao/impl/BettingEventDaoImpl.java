@@ -16,9 +16,9 @@ public class BettingEventDaoImpl implements BettingEventDao {
 
     private final DataSource dataSource;
 
-    private final String SQL_SAVE = "insert into betting_events (target_user_id, subject_id, semester, academic_year, event_type, status) values (?, ?, ?, ?, ?, ?) " +
-            "RETURNING event_id, target_user_id, subject_id, semester, academic_year, event_type, status, created_at, close_it";
-    private final String SQL_UPDATE = "update betting_events set target_user_id = ?, subject_id = ?, semester = ?, academic_year = ?, event_type = ?, status = ?, close_it = ? where event_id = ?";
+    private final String SQL_SAVE = "insert into betting_events (target_user_id, subject_id, semester, academic_year, event_type, status, description) values (?, ?, ?, ?, ?, ?, ?) " +
+            "RETURNING event_id, target_user_id, subject_id, semester, academic_year, event_type, status, description, created_at, close_it";
+    private final String SQL_UPDATE = "update betting_events set target_user_id = ?, subject_id = ?, semester = ?, academic_year = ?, event_type = ?, status = ?, description = ?, close_it = ? where event_id = ?";
     private final String SQL_DELETE = "delete from betting_events where event_id = ?";
     private final String SQL_FIND_BY_ID = "select * from betting_events where event_id = ?";
     private final String SQL_FIND_ALL = "select * from betting_events";
@@ -40,6 +40,7 @@ public class BettingEventDaoImpl implements BettingEventDao {
             preparedStatement.setString(4, event.getAcademicYear());
             preparedStatement.setString(5, event.getEventType());
             preparedStatement.setString(6, event.getStatus());
+            preparedStatement.setString(7, event.getDescription());
             try(ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
                     return mapResultSetToBettingEvent(resultSet);
@@ -61,8 +62,9 @@ public class BettingEventDaoImpl implements BettingEventDao {
             preparedStatement.setString(4, event.getAcademicYear());
             preparedStatement.setString(5, event.getEventType());
             preparedStatement.setString(6, event.getStatus());
-            preparedStatement.setTimestamp(7, event.getClosedIt() != null ? Timestamp.valueOf(event.getClosedIt()) : null);
-            preparedStatement.setInt(8, event.getId());
+            preparedStatement.setString(7, event.getDescription());
+            preparedStatement.setTimestamp(8, event.getClosedIt() != null ? Timestamp.valueOf(event.getClosedIt()) : null);
+            preparedStatement.setInt(9, event.getId());
             int rowsAffected = preparedStatement.executeUpdate();
             if (rowsAffected > 0) {
                 return findById(event.getId());
@@ -175,6 +177,7 @@ public class BettingEventDaoImpl implements BettingEventDao {
                 resultSet.getString("academic_year"),
                 resultSet.getString("event_type"),
                 resultSet.getString("status"),
+                resultSet.getString("description"),
                 resultSet.getTimestamp("created_at") != null ? resultSet.getTimestamp("created_at").toLocalDateTime() : null,
                 resultSet.getTimestamp("close_it") != null ? resultSet.getTimestamp("close_it").toLocalDateTime() : null
         );

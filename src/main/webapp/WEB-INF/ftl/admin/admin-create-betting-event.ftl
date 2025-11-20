@@ -32,13 +32,18 @@
         }
         input[type="text"],
         input[type="number"],
-        select {
+        select,
+        textarea {
             width: 100%;
             padding: 8px;
             border: 1px solid #ddd;
             border-radius: 4px;
             box-sizing: border-box;
             font-family: Arial, sans-serif;
+        }
+        textarea {
+            resize: vertical;
+            min-height: 100px;
         }
         input[type="number"] {
             width: 100%;
@@ -136,6 +141,11 @@
                 <option value="CLOSED">CLOSED</option>
                 <option value="RESOLVED">RESOLVED</option>
             </select>
+        </div>
+
+        <div class="form-group">
+            <label for="description">Описание</label>
+            <textarea id="description" name="description" maxlength="1000"></textarea>
         </div>
 
         <div class="button-group">

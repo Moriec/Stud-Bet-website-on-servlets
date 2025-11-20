@@ -409,9 +409,15 @@
                     <div class="bet-card" style="cursor: pointer;">
                         <div class="subject-info">
                             <h4>${event.eventType}</h4>
-                            <p style="margin: 8px 0 0 0; color: var(--text-secondary); font-size: 14px;">
-                                Семестр ${event.semestr} • ${event.academicYear}
-                            </p>
+                            <#if event.description?? && event.description != "">
+                                <p style="margin: 8px 0 0 0; color: var(--text-secondary); font-size: 14px;">
+                                    ${event.description}
+                                </p>
+                            <#else>
+                                <p style="margin: 8px 0 0 0; color: var(--text-secondary); font-size: 14px;">
+                                    Семестр ${event.semestr} • ${event.academicYear}
+                                </p>
+                            </#if>
                         </div>
                     </div>
                 </a>

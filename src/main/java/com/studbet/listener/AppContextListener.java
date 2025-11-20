@@ -14,6 +14,8 @@ import com.studbet.service.entity.*;
 import com.studbet.service.entity.impl.*;
 import com.studbet.service.main.MainPageService;
 import com.studbet.service.main.impl.MainPageServiceImpl;
+import com.studbet.service.profile.ProfileService;
+import com.studbet.service.profile.impl.ProfileServiceImpl;
 import com.studbet.service.session.SessionService;
 import com.studbet.service.session.impl.SessionServiceImpl;
 import com.studbet.util.dataSource.DataSourceFabric;
@@ -53,8 +55,7 @@ public class AppContextListener implements ServletContextListener {
         SubjectDao subjectDao = new SubjectDaoImpl(dataSource);
         TransactionDao transactionDao = new TransactionDaoImpl(dataSource);
         UserAchievementDao userAchievementDao = new UserAchievementDaoImpl(dataSource);
-        
-        //sce.getServletContext().setAttribute("subjectDao", subjectDao);
+
 
         //utils
         PasswordEncrypt passwordEncrypt = new PasswordEncryptBCrypt();
@@ -78,7 +79,8 @@ public class AppContextListener implements ServletContextListener {
         //admin service
         SubjectService subjectService = new SubjectServiceImpl(subjectDao);
         sce.getServletContext().setAttribute("subjectService", subjectService);
-        
+
+        //entity service
         UserService userService = new UserServiceImpl(userDao, passwordEncrypt);
         sce.getServletContext().setAttribute("userService", userService);
         
@@ -91,7 +93,9 @@ public class AppContextListener implements ServletContextListener {
         StudentResultService studentResultService = new StudentResultServiceImpl(studentResultDao);
         sce.getServletContext().setAttribute("studentResultService", studentResultService);
 
-
+        //profile service
+        ProfileService profileService = new ProfileServiceImpl(userDao);
+        sce.getServletContext().setAttribute("profileService", profileService);
 
     }
 }

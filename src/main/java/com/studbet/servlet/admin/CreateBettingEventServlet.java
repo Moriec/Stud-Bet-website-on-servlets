@@ -37,6 +37,7 @@ public class CreateBettingEventServlet extends HttpServlet {
             String academicYear = request.getParameter("academicYear");
             String eventType = request.getParameter("eventType");
             String status = request.getParameter("status");
+            String description = request.getParameter("description");
 
             if (targetUserIdStr == null || targetUserIdStr.trim().isEmpty() ||
                     subjectIdStr == null || subjectIdStr.trim().isEmpty() ||
@@ -69,7 +70,8 @@ public class CreateBettingEventServlet extends HttpServlet {
                         semestr,
                         academicYear.trim(),
                         eventType.trim(),
-                        status.trim()
+                        status.trim(),
+                        description != null ? description.trim() : ""
                 );
                 bettingEventService.createBettingEvent(bettingEvent);
 
