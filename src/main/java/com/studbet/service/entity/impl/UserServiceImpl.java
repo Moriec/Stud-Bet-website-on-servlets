@@ -24,5 +24,12 @@ public class UserServiceImpl implements UserService {
                 user.getRole()
         ));
     }
+
+    @Override
+    public User getUserById(int id) {
+        return userDao.findById(id);
+    }
+
+
 }
 

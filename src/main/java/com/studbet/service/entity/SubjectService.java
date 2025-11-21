@@ -9,4 +9,5 @@ import java.io.IOException;
 
 public interface SubjectService {
     void createSubject(Subject subject);
+    Subject getSubjectById(int id);
 }

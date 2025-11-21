@@ -289,7 +289,7 @@
 <body>
 <!-- Header -->
 <header class="header">
-    <a href=".." class="header-brand">StudBet</a>
+    <a href="." class="header-brand">StudBet</a>
     <div class="header-left">
         <nav class="header-nav">
             <a href="leaderboards">Рейтинги</a>

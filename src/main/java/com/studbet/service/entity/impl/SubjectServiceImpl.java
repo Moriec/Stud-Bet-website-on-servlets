@@ -16,4 +16,8 @@ public class SubjectServiceImpl implements SubjectService {
     public void createSubject(Subject subject) {
         subjectDao.save(subject);
     }
+
+    public Subject getSubjectById(int id) {
+        return subjectDao.findById(id);
+    }
 }
