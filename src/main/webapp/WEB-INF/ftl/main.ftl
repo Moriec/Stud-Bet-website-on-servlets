@@ -293,7 +293,6 @@
             background-color: var(--border);
         }
 
-        /* Empty State */
         .empty-state {
             text-align: center;
             padding: 64px 24px;
@@ -312,7 +311,6 @@
             margin-bottom: 24px;
         }
 
-        /* Badge */
         .badge {
             display: inline-block;
             padding: 4px 12px;
@@ -331,7 +329,6 @@
             color: var(--white);
         }
 
-        /* Responsive */
         @media (max-width: 768px) {
             .header {
                 padding: 0 16px;
@@ -374,7 +371,7 @@
     <div class="header-left">
 
         <nav class="header-nav">
-            <a href="leaderboards">Рейтинги</a>
+            <a href="leaderboards">Рейтинг</a>
             <a href="rules">Правила</a>
             <a href="faq">FAQ</a>
         </nav>
@@ -382,27 +379,23 @@
 
     <nav class="header-nav">
         <#if user??>
-            <!-- Authenticated User -->
             <a href="profile" class="user-avatar">
                 <img src="${user.avatar!'/static/img/avatar-placeholder.png'}" alt="Avatar" hidden="hidden">
                 <span>${user.username}</span>
             </a>
             <a href="logout">Выход</a>
         <#else>
-            <!-- Guest User -->
             <a href="sign_up">Регистрация</a>
             <a href="login">Войти</a>
         </#if>
     </nav>
 </header>
 
-<!-- Main Content -->
 <main class="main-container">
     <h1 class="page-title">Доступные ставки</h1>
     <p class="page-subtitle">Делай ставки на результаты экзаменов и зарабатывай StudCoins!</p>
 
     <#if bettingEvents?? && (bettingEvents?size > 0)>
-        <!-- Events List -->
         <div style="display: flex; flex-direction: column; gap: 16px;">
             <#list bettingEvents as event>
                 <a href="betting-event?id=${event.id}" style="text-decoration: none; color: inherit; display: block;">
@@ -424,7 +417,6 @@
             </#list>
         </div>
     <#else>
-        <!-- Empty State -->
         <div class="empty-state">
             <h3>Нет доступных ставок</h3>
             <p>В данный момент нет открытых событий для ставок. Заходи позже!</p>
