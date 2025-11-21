@@ -57,7 +57,7 @@ public class BetServiceImpl implements BetService {
         Bet savedBet = betDao.save(bet);
         
         if (savedBet != null) {
-            Transaction transaction = new Transaction(user.getId(), savedBet.getId(), TransactionType.BET_PLACED.name(), savedBet.getBetAmount(), user.getBalance(), user.getBalance() - savedBet.getBetAmount(), "Ставка");
+            Transaction transaction = new Transaction(user.getId(), savedBet.getId(), TransactionType.BET_PLACED.name(), -savedBet.getBetAmount(), user.getBalance(), user.getBalance() - savedBet.getBetAmount(), "Ставка");
             user.setBalance(user.getBalance() - bet.getBetAmount());
             user = userDao.update(user);
             if(user != null) {

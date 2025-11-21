@@ -20,6 +20,8 @@ import com.studbet.service.profile.ProfileService;
 import com.studbet.service.profile.impl.ProfileServiceImpl;
 import com.studbet.service.session.SessionService;
 import com.studbet.service.session.impl.SessionServiceImpl;
+import com.studbet.service.transaction.TransactionService;
+import com.studbet.service.transaction.impl.TransactionServiceImpl;
 import com.studbet.util.dataSource.DataSourceFabric;
 import com.studbet.util.dataSource.impl.HicaryDataSorceFabric;
 import com.studbet.util.validate.UserValidate;
@@ -95,6 +97,9 @@ public class AppContextListener implements ServletContextListener {
         StudentResultService studentResultService = new StudentResultServiceImpl(studentResultDao);
         sce.getServletContext().setAttribute("studentResultService", studentResultService);
 
+        TransactionService transactionService = new TransactionServiceImpl(transactionDao);
+        sce.getServletContext().setAttribute("transactionService", transactionService);
+
         //profile service
         ProfileService profileService = new ProfileServiceImpl(userDao);
         sce.getServletContext().setAttribute("profileService", profileService);
@@ -105,6 +110,7 @@ public class AppContextListener implements ServletContextListener {
         
         // Register DAOs for servlets
         sce.getServletContext().setAttribute("bettingEventDao", bettingEventDao);
+
 
     }
 }

@@ -1,6 +1,5 @@
 package com.studbet.servlet.bet;
 
-import com.studbet.dao.TransactionDao;
 import com.studbet.model.Bet;
 import com.studbet.model.User;
 import com.studbet.security.session.UserSession;
