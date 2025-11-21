@@ -244,7 +244,7 @@
 
     <div class="faq-item">
         <h2 class="faq-question">
-            <i class="fas fa-shield-alt"></i> Можно ли ставить на свои события?
+            <i class="fas fa-shield-alt"></i> Можно ли ставить события со своим участием?
         </h2>
         <p class="faq-answer">
             <strong>Да, можно</strong>

@@ -48,7 +48,6 @@ public class RegistrationServlet extends HttpServlet {
 
         Map<String, String> errors = new HashMap<>();
 
-        // Проверка на корректные данные
         if(!userValidate.isEmailValid(email)){
             errors.put("general", "Недопустимый формат электронной почты");
         }
@@ -90,7 +89,6 @@ public class RegistrationServlet extends HttpServlet {
         } catch (IOException ex){
             throw ex; // Не удалось произвести redirect на корень
         } catch (Exception e) {
-            //Неизвестная ошибка сервера
             errors.put("general", "Не удалось пройти регистрацию");
 
             req.setAttribute("username", username);

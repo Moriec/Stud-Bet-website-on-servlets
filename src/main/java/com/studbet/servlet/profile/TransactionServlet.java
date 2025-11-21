@@ -1,8 +1,7 @@
 package com.studbet.servlet.profile;
 
-import com.studbet.dao.TransactionDao;
+
 import com.studbet.model.Transaction;
-import com.studbet.model.User;
 import com.studbet.security.session.UserSession;
 import com.studbet.service.session.SessionService;
 import com.studbet.service.transaction.TransactionService;

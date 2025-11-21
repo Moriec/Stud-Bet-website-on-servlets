@@ -5,6 +5,7 @@ import com.studbet.enums.BetStatus;
 import com.studbet.enums.TransactionType;
 import com.studbet.model.*;
 import com.studbet.service.bet.BetService;
+import com.studbet.util.calculator.NormalCalculator;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,13 +19,15 @@ public class BetServiceImpl implements BetService {
     private final UserDao userDao;
     private final SubjectDao subjectDao;
     private final TransactionDao transactionDao;
+    private final NormalCalculator normalCalculator;
 
-    public BetServiceImpl(BetDao betDao, BettingEventDao bettingEventDao, UserDao userDao, SubjectDao subjectDao, TransactionDao transactionDao) {
+    public BetServiceImpl(BetDao betDao, BettingEventDao bettingEventDao, UserDao userDao, SubjectDao subjectDao, TransactionDao transactionDao, NormalCalculator normalCalculator) {
         this.betDao = betDao;
         this.bettingEventDao = bettingEventDao;
         this.userDao = userDao;
         this.subjectDao = subjectDao;
         this.transactionDao = transactionDao;
+        this.normalCalculator = normalCalculator;
     }
 
     @Override
@@ -33,11 +36,26 @@ public class BetServiceImpl implements BetService {
             return 1.0;
         }
 
-        double rangeWidth = (double)(predictedScoreMax - predictedScoreMin + 1) / maxScore;
-        double baseOdds = 1.0 + (1.0 - rangeWidth) * 3.0;
-        double betBonus = Math.min(0.5, betAmount / 1000.0 * 0.1);
-        double finalOdds = baseOdds + betBonus;
-        return Math.round(finalOdds * 100.0) / 100.0;
+        double chance = normalCalculator.calculateProbability(predictedScoreMin, predictedScoreMax);
+        double odds = calculateBettingOdds(chance);
+        double koef = Math.round(odds * 100.0) / 100.0;
+        if(koef < 0) {
+            koef = 98;
+        }
+        if(koef > 100){
+            koef = 98;
+        }
+        if(koef < 1){
+            return 1.0;
+        }
+        return (Math.sqrt(koef) - 1) + Math.sqrt(koef);
+    }
+
+    private double calculateBettingOdds(double probability) {
+        double margin = 0.22;
+        double adjusted = probability * (1 + margin);
+        double odds = 1.0 / adjusted;
+        return odds;
     }
 
     @Override

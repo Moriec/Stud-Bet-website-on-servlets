@@ -1,6 +1,7 @@
 package com.studbet.servlet.admin;
 
 import com.studbet.model.StudentResult;
+import com.studbet.service.bet.BetCompleteService;
 import com.studbet.service.entity.StudentResultService;
 
 import javax.servlet.ServletException;
@@ -16,10 +17,12 @@ public class CreateStudentResultServlet extends HttpServlet {
     private static final String FTL_PATH = "/WEB-INF/ftl/admin/admin-create-student-result.ftl";
 
     StudentResultService studentResultService;
+    BetCompleteService betCompleteService;
 
     @Override
     public void init() throws ServletException {
         studentResultService = (StudentResultService) getServletContext().getAttribute("studentResultService");
+        betCompleteService = (BetCompleteService) getServletContext().getAttribute("betCompleteService");
     }
 
     @Override
@@ -74,6 +77,8 @@ public class CreateStudentResultServlet extends HttpServlet {
                         isFinalized
                 );
                 studentResultService.createStudentResult(studentResult);
+
+                betCompleteService.completeBet(studentResult);
 
                 request.setAttribute("message", "Успешно добавлено");
                 request.setAttribute("messageType", "success");

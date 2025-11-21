@@ -401,10 +401,10 @@
                 <a href="betting-event?id=${event.id}" style="text-decoration: none; color: inherit; display: block;">
                     <div class="bet-card" style="cursor: pointer;">
                         <div class="subject-info">
-                            <h4>${event.eventType}</h4>
-                            <#if event.description?? && event.description != "">
+                            <h4>${event.description}</h4>
+                            <#if event.eventType?? && event.eventType!= "">
                                 <p style="margin: 8px 0 0 0; color: var(--text-secondary); font-size: 14px;">
-                                    ${event.description}
+                                    ${event.eventType}
                                 </p>
                             <#else>
                                 <p style="margin: 8px 0 0 0; color: var(--text-secondary); font-size: 14px;">

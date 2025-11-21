@@ -1,8 +1,6 @@
 package com.studbet.servlet.profile;
 
-import com.studbet.dao.UserDao;
 import com.studbet.dto.ProfileUser;
-import com.studbet.model.User;
 import com.studbet.security.session.UserSession;
 import com.studbet.service.profile.ProfileService;
 import com.studbet.service.session.SessionService;

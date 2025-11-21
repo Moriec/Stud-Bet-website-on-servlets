@@ -1,11 +1,8 @@
 package com.studbet.servlet.bet;
 
-import com.studbet.dao.BettingEventDao;
-import com.studbet.dao.SubjectDao;
 import com.studbet.model.BettingEvent;
 import com.studbet.model.Subject;
 import com.studbet.service.bet.BetService;
-import com.studbet.service.entity.BettingEventService;
 import com.studbet.service.entity.SubjectService;
 
 import javax.servlet.ServletException;

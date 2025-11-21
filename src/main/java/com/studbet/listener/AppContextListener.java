@@ -10,6 +10,8 @@ import com.studbet.service.auth.RegistrationService;
 import com.studbet.service.auth.impl.CheckLoginServiceImpl;
 import com.studbet.service.auth.impl.LoginServiceImpl;
 import com.studbet.service.auth.impl.RegistrationServiceImpl;
+import com.studbet.service.bet.BetCompleteService;
+import com.studbet.service.bet.impl.BetCompleteServiceImpl;
 import com.studbet.service.entity.*;
 import com.studbet.service.entity.impl.*;
 import com.studbet.service.liderboard.LeaderboardService;
@@ -24,6 +26,8 @@ import com.studbet.service.session.SessionService;
 import com.studbet.service.session.impl.SessionServiceImpl;
 import com.studbet.service.transaction.TransactionService;
 import com.studbet.service.transaction.impl.TransactionServiceImpl;
+import com.studbet.util.calculator.NormalCalculator;
+import com.studbet.util.calculator.impl.NormalCalculatorImpl;
 import com.studbet.util.dataSource.DataSourceFabric;
 import com.studbet.util.dataSource.impl.HicaryDataSorceFabric;
 import com.studbet.util.validate.UserValidate;
@@ -106,15 +110,18 @@ public class AppContextListener implements ServletContextListener {
         ProfileService profileService = new ProfileServiceImpl(userDao);
         sce.getServletContext().setAttribute("profileService", profileService);
 
+        //калькулятор
+        NormalCalculator normalCalculator = new NormalCalculatorImpl(76.2886, 22.2902);
         //bet service
-        BetService betService = new BetServiceImpl(betDao, bettingEventDao, userDao, subjectDao, transactionDao);
+        BetService betService = new BetServiceImpl(betDao, bettingEventDao, userDao, subjectDao, transactionDao, normalCalculator);
         sce.getServletContext().setAttribute("betService", betService);
 
-
-        sce.getServletContext().setAttribute("bettingEventDao", bettingEventDao);
+        BetCompleteService betCompleteService = new BetCompleteServiceImpl(userDao, bettingEventDao, transactionDao, betDao);
+        sce.getServletContext().setAttribute("betCompleteService", betCompleteService);
 
         LeaderboardService leaderboardService = new LeaderboardServiceImpl(userDao);
         sce.getServletContext().setAttribute("leaderboardService", leaderboardService);
+
 
 
 
