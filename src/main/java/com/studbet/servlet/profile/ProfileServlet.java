@@ -105,7 +105,11 @@ public class ProfileServlet extends HttpServlet {
         user.setFirstname(firstname != null ? firstname.trim() : null);
         user.setLastname(lastname != null ? lastname.trim() : null);
 
-        profileService.updateName(user);
+        try {
+            profileService.updateName(user);
+        }catch (Exception e){
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Много символов");
+        }
 
         request.setAttribute("message", "Профиль успешно обновлен");
         request.setAttribute("messageType", "success");

@@ -2,10 +2,6 @@ package com.studbet.util.calculator.impl;
 
 import com.studbet.util.calculator.NormalCalculator;
 
-/**
- * Простая версия без зависимостей - использует встроенные возможности Java
- * Приблизительный расчет функции распределения
- */
 public class NormalCalculatorImpl implements NormalCalculator {
 
     private double mean;

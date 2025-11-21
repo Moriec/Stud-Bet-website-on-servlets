@@ -121,9 +121,5 @@ public class AppContextListener implements ServletContextListener {
 
         LeaderboardService leaderboardService = new LeaderboardServiceImpl(userDao);
         sce.getServletContext().setAttribute("leaderboardService", leaderboardService);
-
-
-
-
     }
 }

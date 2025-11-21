@@ -300,7 +300,7 @@
     <nav class="header-nav">
         <#if user??>
             <a href="?id=${user.id}" class="user-avatar">
-                <span>${user.username}</span>
+                <span>${user.username?html}</span>
             </a>
             <a href="logout">Выход</a>
         <#else>
@@ -327,16 +327,16 @@
                 <div class="profile-info">
                     <h1>
                         <#if profileUser.firstname?? && profileUser.firstname != "">
-                            ${profileUser.firstname}
+                            ${profileUser.firstname?html}
                         </#if>
                         <#if profileUser.lastname?? && profileUser.lastname != "">
-                            ${profileUser.lastname}
+                            ${profileUser.lastname?html}
                         </#if>
                         <#if (!profileUser.firstname?? || profileUser.firstname == "") && (!profileUser.lastname?? || profileUser.lastname == "")>
                             Пользователь
                         </#if>
                     </h1>
-                    <div class="username">@${profileUser.username}</div>
+                    <div class="username">@${profileUser.username?html}</div>
                 </div>
             </div>
 
@@ -355,18 +355,18 @@
                 <h2>Информация</h2>
                 <div class="info-row">
                     <span class="info-label">Имя пользователя:</span>
-                    <span class="info-value">${profileUser.username}</span>
+                    <span class="info-value">${profileUser.username?html}</span>
                 </div>
                 <#if profileUser.firstname?? && profileUser.firstname != "">
                     <div class="info-row">
                         <span class="info-label">Имя:</span>
-                        <span class="info-value">${profileUser.firstname}</span>
+                        <span class="info-value">${profileUser.firstname?html}</span>
                     </div>
                 </#if>
                 <#if profileUser.lastname?? && profileUser.lastname != "">
                     <div class="info-row">
                         <span class="info-label">Фамилия:</span>
-                        <span class="info-value">${profileUser.lastname}</span>
+                        <span class="info-value">${profileUser.lastname?html}</span>
                     </div>
                 </#if>
                 <div class="info-row">
