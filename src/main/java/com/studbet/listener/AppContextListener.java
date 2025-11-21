@@ -12,6 +12,8 @@ import com.studbet.service.auth.impl.LoginServiceImpl;
 import com.studbet.service.auth.impl.RegistrationServiceImpl;
 import com.studbet.service.entity.*;
 import com.studbet.service.entity.impl.*;
+import com.studbet.service.liderboard.LeaderboardService;
+import com.studbet.service.liderboard.impl.LeaderboardServiceImpl;
 import com.studbet.service.main.MainPageService;
 import com.studbet.service.main.impl.MainPageServiceImpl;
 import com.studbet.service.bet.BetService;
@@ -107,9 +109,13 @@ public class AppContextListener implements ServletContextListener {
         //bet service
         BetService betService = new BetServiceImpl(betDao, bettingEventDao, userDao, subjectDao, transactionDao);
         sce.getServletContext().setAttribute("betService", betService);
-        
-        // Register DAOs for servlets
+
+
         sce.getServletContext().setAttribute("bettingEventDao", bettingEventDao);
+
+        LeaderboardService leaderboardService = new LeaderboardServiceImpl(userDao);
+        sce.getServletContext().setAttribute("leaderboardService", leaderboardService);
+
 
 
     }

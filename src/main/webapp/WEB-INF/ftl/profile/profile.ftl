@@ -407,6 +407,7 @@
                         <div class="button-group">
                             <button type="submit" class="btn btn-primary">Сохранить изменения</button>
                             <a href="profile/transactions" class="btn btn-secondary" style="text-decoration: none; display: inline-flex; align-items: center; justify-content: center;">Транзакции</a>
+                            <a href="profile/my-bets" class="btn btn-secondary" style="text-decoration: none; display: inline-flex; align-items: center; justify-content: center;">Мои ставки</a>
                         </div>
                     </form>
                 </div>

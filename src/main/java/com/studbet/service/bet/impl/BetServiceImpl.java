@@ -6,6 +6,11 @@ import com.studbet.enums.TransactionType;
 import com.studbet.model.*;
 import com.studbet.service.bet.BetService;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 public class BetServiceImpl implements BetService {
 
     private final BetDao betDao;
@@ -71,6 +76,59 @@ public class BetServiceImpl implements BetService {
     @Override
     public BettingEvent getBettingEventById(int eventId) {
         return bettingEventDao.findById(eventId);
+    }
+
+
+    public List<Map<String, Object>> getUserBetsWithEvents(int userId) {
+        List<Bet> bets = betDao.findByBettorId(userId);
+        List<Map<String, Object>> result = new ArrayList<>();
+
+        for (Bet bet : bets) {
+            BettingEvent event = bettingEventDao.findById(bet.getEventId());
+
+            Map<String, Object> betData = new HashMap<>();
+            betData.put("bet", bet);
+            betData.put("event", event);
+
+            result.add(betData);
+        }
+
+        return result;
+    }
+
+    public Map<String, Integer> getUserBetsStats(int userId) {
+        List<Bet> bets = betDao.findByBettorId(userId);
+
+        int totalBets = bets.size();
+        int wonBets = 0;
+        int lostBets = 0;
+        int activeBets = 0;
+        int totalBetAmount = 0;
+        int totalPayout = 0;
+
+        for (Bet bet : bets) {
+            totalBetAmount += bet.getBetAmount();
+            totalPayout += bet.getPayoutAmount();
+
+            if ("WON".equals(bet.getStatus())) {
+                wonBets++;
+            } else if ("LOST".equals(bet.getStatus())) {
+                lostBets++;
+            } else if ("PENDING".equals(bet.getStatus()) || "ACTIVE".equals(bet.getStatus())) {
+                activeBets++;
+            }
+        }
+
+        Map<String, Integer> stats = new HashMap<>();
+        stats.put("totalBets", totalBets);
+        stats.put("wonBets", wonBets);
+        stats.put("lostBets", lostBets);
+        stats.put("activeBets", activeBets);
+        stats.put("totalBetAmount", totalBetAmount);
+        stats.put("totalPayout", totalPayout);
+        stats.put("profit", totalPayout - totalBetAmount);
+
+        return stats;
     }
 }
 
