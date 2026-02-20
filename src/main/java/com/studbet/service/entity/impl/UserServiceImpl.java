@@ -4,16 +4,15 @@ import com.studbet.dao.UserDao;
 import com.studbet.model.User;
 import com.studbet.security.password.PasswordEncrypt;
 import com.studbet.service.entity.UserService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
+@Service
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
-    UserDao userDao;
-    PasswordEncrypt passwordEncrypt;
-
-    public UserServiceImpl(UserDao userDao, PasswordEncrypt passwordEncrypt) {
-        this.userDao = userDao;
-        this.passwordEncrypt = passwordEncrypt;
-    }
+    private final UserDao userDao;
+    private final PasswordEncrypt passwordEncrypt;
 
     @Override
     public void createUser(User user) {
@@ -27,7 +26,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUserById(int id) {
-        return userDao.findById(id);
+        return userDao.findById(id).orElse(null);
     }
 
 

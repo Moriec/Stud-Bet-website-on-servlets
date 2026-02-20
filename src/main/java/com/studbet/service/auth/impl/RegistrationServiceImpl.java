@@ -5,17 +5,15 @@ import com.studbet.model.User;
 import com.studbet.security.password.PasswordEncrypt;
 import com.studbet.security.session.UserSession;
 import com.studbet.service.auth.RegistrationService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
-
+@Service
+@RequiredArgsConstructor
 public class RegistrationServiceImpl implements RegistrationService {
 
-    UserDao  userDao;
-    PasswordEncrypt passwordEncrypt;
-
-    public RegistrationServiceImpl(UserDao userDao,  PasswordEncrypt passwordEncrypt) {
-        this.userDao = userDao;
-        this.passwordEncrypt = passwordEncrypt;
-    }
+    private final UserDao  userDao;
+    private final PasswordEncrypt passwordEncrypt;
 
     @Override
     public UserSession saveUser(User user) {

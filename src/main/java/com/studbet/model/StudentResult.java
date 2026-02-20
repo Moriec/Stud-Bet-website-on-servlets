@@ -1,26 +1,32 @@
 package com.studbet.model;
 
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Entity
+@Table(name = "student_result")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class StudentResult {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "result_id")
     private int resultId;
+    @Column(name = "user_id")
     private int userId;
+    @Column(name = "subject_id")
     private int subjectId;
+    @Column(name = "actual_score")
     private int actualScore;
+    @Column(name = "semester")
     private int semestr;
+    @Column(name = "academic_year")
     private String academicYear;
+    @Column(name = "is_finelized")
     private boolean isFinelized;
-
-    public StudentResult() {
-    }
-
-    public StudentResult(int resultId, int userId, int subjectId, int actualScore, int semestr, String academicYear, boolean isFinelized) {
-        this.resultId = resultId;
-        this.userId = userId;
-        this.subjectId = subjectId;
-        this.actualScore = actualScore;
-        this.semestr = semestr;
-        this.academicYear = academicYear;
-        this.isFinelized = isFinelized;
-    }
 
     public StudentResult(int userId, int subjectId, int actualScore, int semestr, String academicYear, boolean isFinelized) {
         this.userId = userId;
@@ -29,74 +35,5 @@ public class StudentResult {
         this.semestr = semestr;
         this.academicYear = academicYear;
         this.isFinelized = isFinelized;
-    }
-
-    public int getResultId() {
-        return resultId;
-    }
-
-    public void setResultId(int resultId) {
-        this.resultId = resultId;
-    }
-
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
-
-    public int getSubjectId() {
-        return subjectId;
-    }
-
-    public void setSubjectId(int subjectId) {
-        this.subjectId = subjectId;
-    }
-
-    public int getActualScore() {
-        return actualScore;
-    }
-
-    public void setActualScore(int actualScore) {
-        this.actualScore = actualScore;
-    }
-
-    public int getSemestr() {
-        return semestr;
-    }
-
-    public void setSemestr(int semestr) {
-        this.semestr = semestr;
-    }
-
-    public String getAcademicYear() {
-        return academicYear;
-    }
-
-    public void setAcademicYear(String academicYear) {
-        this.academicYear = academicYear;
-    }
-
-    public boolean isFinelized() {
-        return isFinelized;
-    }
-
-    public void setFinelized(boolean finelized) {
-        isFinelized = finelized;
-    }
-
-    @Override
-    public String toString() {
-        return "StudentResult{" +
-                "resultId=" + resultId +
-                ", userId=" + userId +
-                ", subjectId=" + subjectId +
-                ", actualScore=" + actualScore +
-                ", semestr=" + semestr +
-                ", academicYear='" + academicYear + '\'' +
-                ", isFinelized=" + isFinelized +
-                '}';
     }
 }

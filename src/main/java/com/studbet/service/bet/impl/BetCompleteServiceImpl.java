@@ -9,24 +9,21 @@ import com.studbet.enums.EventStatus;
 import com.studbet.enums.TransactionType;
 import com.studbet.model.*;
 import com.studbet.service.bet.BetCompleteService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Service
+@RequiredArgsConstructor
 public class BetCompleteServiceImpl implements BetCompleteService {
 
-    UserDao userDao;
-    BettingEventDao bettingEventDao;
-    TransactionDao transactionDao;
-    BetDao betDao;
-
-    public BetCompleteServiceImpl(UserDao userDao, BettingEventDao bettingEventDao, TransactionDao transactionDao, BetDao betDao) {
-        this.userDao = userDao;
-        this.bettingEventDao = bettingEventDao;
-        this.transactionDao = transactionDao;
-        this.betDao = betDao;
-    }
+    private final UserDao userDao;
+    private final BettingEventDao bettingEventDao;
+    private final TransactionDao transactionDao;
+    private final BetDao betDao;
 
     public void completeBet(StudentResult studentResult) {
         int targetUserId = studentResult.getUserId();
@@ -44,7 +41,7 @@ public class BetCompleteServiceImpl implements BetCompleteService {
         for(BettingEvent bettingEvent : bettingEvents) {
             bettingEvent.setClosedIt(LocalDateTime.now());
             bettingEvent.setStatus(EventStatus.RESOLVED.name());
-            bettingEventDao.update(bettingEvent);
+            bettingEventDao.save(bettingEvent);
         }
 
         //
@@ -55,22 +52,24 @@ public class BetCompleteServiceImpl implements BetCompleteService {
             if(bettingEventsId.contains(bet.getEventId())) {
                 if(isWin(studentResult, bet)){
                     //Платим
-                    User user = userDao.findById(bet.getBettorId());
-                    user.setBalance(user.getBalance() + bet.getPayoutAmount());
-                    user.setRatingPoints(user.getRatingPoints() + bet.getPayoutAmount());
-                    userDao.update(user);
+                    User user = userDao.findById(bet.getBettorId()).orElse(null);
+                    if (user != null) {
+                        user.setBalance(user.getBalance() + bet.getPayoutAmount());
+                        user.setRatingPoints(user.getRatingPoints() + bet.getPayoutAmount());
+                        userDao.save(user);
 
-                    Transaction transaction = new Transaction(user.getId(), TransactionType.BET_WIN.name(), bet.getPayoutAmount(), user.getBalance() - bet.getPayoutAmount(), user.getBalance(), "Успешная ставка");
-                    transactionDao.save(transaction);
+                        Transaction transaction = new Transaction(user.getId(), TransactionType.BET_WIN.name(), bet.getPayoutAmount(), user.getBalance() - bet.getPayoutAmount(), user.getBalance(), "Успешная ставка");
+                        transactionDao.save(transaction);
+                    }
 
                     bet.setResolvedAt(LocalDateTime.now());
                     bet.setStatus(BetStatus.WON.name());
-                    betDao.update(bet);
+                    betDao.save(bet);
                 }
                 else{
                     bet.setResolvedAt(LocalDateTime.now());
                     bet.setStatus(BetStatus.LOST.name());
-                    betDao.update(bet);
+                    betDao.save(bet);
                 }
             }
         }

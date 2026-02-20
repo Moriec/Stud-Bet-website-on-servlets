@@ -5,6 +5,9 @@ import org.apache.commons.validator.routines.EmailValidator;
 
 import java.util.regex.Pattern;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class UserValidateImpl implements UserValidate {
 
     private static final Pattern USERNAME_RE = Pattern.compile("^[a-zA-Z0-9_-]{3,30}$");

@@ -1,21 +1,39 @@
 package com.studbet.model;
 
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 
+@Entity
+@Table(name = "betting_events")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class BettingEvent {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "event_id")
     private int id;
+    @Column(name = "target_user_id")
     private int targetUserId;
+    @Column(name = "subject_id")
     private int subjectId;
+    @Column(name = "semester")
     private int semestr;
+    @Column(name = "academic_year")
     private String academicYear;
+    @Column(name = "event_type")
     private String eventType;
-    private String Status;
+    @Column(name = "status")
+    private String status;
+    @Column(name = "description")
     private String description;
+    @Column(name = "created_at")
     private LocalDateTime createdAt;
+    @Column(name = "close_it")
     private LocalDateTime closedIt;
-
-    public BettingEvent() {
-    }
 
     public BettingEvent(int targetUserId, int subjectId, int semestr, String academicYear, String eventType, String status, String description) {
         this.targetUserId = targetUserId;
@@ -23,116 +41,7 @@ public class BettingEvent {
         this.semestr = semestr;
         this.academicYear = academicYear;
         this.eventType = eventType;
-        Status = status;
+        this.status = status;
         this.description = description;
-    }
-
-    public BettingEvent(int id, int targetUserId, int subjectId, int semestr, String academicYear, String eventType, String status, String description, LocalDateTime createdAt, LocalDateTime closedIt) {
-        this.id = id;
-        this.targetUserId = targetUserId;
-        this.subjectId = subjectId;
-        this.semestr = semestr;
-        this.academicYear = academicYear;
-        this.eventType = eventType;
-        Status = status;
-        this.description = description;
-        this.createdAt = createdAt;
-        this.closedIt = closedIt;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public int getTargetUserId() {
-        return targetUserId;
-    }
-
-    public void setTargetUserId(int targetUserId) {
-        this.targetUserId = targetUserId;
-    }
-
-    public int getSubjectId() {
-        return subjectId;
-    }
-
-    public void setSubjectId(int subjectId) {
-        this.subjectId = subjectId;
-    }
-
-    public int getSemestr() {
-        return semestr;
-    }
-
-    public void setSemestr(int semestr) {
-        this.semestr = semestr;
-    }
-
-    public String getAcademicYear() {
-        return academicYear;
-    }
-
-    public void setAcademicYear(String academicYear) {
-        this.academicYear = academicYear;
-    }
-
-    public String getEventType() {
-        return eventType;
-    }
-
-    public void setEventType(String eventType) {
-        this.eventType = eventType;
-    }
-
-    public String getStatus() {
-        return Status;
-    }
-
-    public void setStatus(String status) {
-        Status = status;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public LocalDateTime getClosedIt() {
-        return closedIt;
-    }
-
-    public void setClosedIt(LocalDateTime closedIt) {
-        this.closedIt = closedIt;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    @Override
-    public String toString() {
-        return "Betting_Event{" +
-                "id=" + id +
-                ", targetUserId=" + targetUserId +
-                ", subjectId=" + subjectId +
-                ", semestr=" + semestr +
-                ", academicYear='" + academicYear + '\'' +
-                ", eventType='" + eventType + '\'' +
-                ", Status='" + Status + '\'' +
-                ", description='" + description + '\'' +
-                ", createdAt=" + createdAt +
-                ", closedIt=" + closedIt +
-                '}';
     }
 }

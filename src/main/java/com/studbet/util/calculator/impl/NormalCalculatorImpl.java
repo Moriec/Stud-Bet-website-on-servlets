@@ -2,17 +2,16 @@ package com.studbet.util.calculator.impl;
 
 import com.studbet.util.calculator.NormalCalculator;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class NormalCalculatorImpl implements NormalCalculator {
 
-    private double mean;
-    private double stdDev;
+    // Подсчитанные характеристики нормальной функции распределения учебных баллов
+    private final double mean = 76.2886;
+    private final double stdDev = 22.2902;
 
-    public NormalCalculatorImpl(double mean, double stdDev) {
-        if (stdDev <= 0) {
-            throw new IllegalArgumentException("Стандартное отклонение должно быть > 0");
-        }
-        this.mean = mean;
-        this.stdDev = stdDev;
+    public NormalCalculatorImpl() {
     }
 
     // метод Абрамовица и Стегуна

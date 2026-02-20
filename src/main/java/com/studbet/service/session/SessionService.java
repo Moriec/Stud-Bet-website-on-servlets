@@ -2,7 +2,8 @@ package com.studbet.service.session;
 
 import com.studbet.security.session.UserSession;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 
 public interface SessionService {
     void createSession(HttpServletRequest req, UserSession userSession); // Создать новую сессию с данными пользователя

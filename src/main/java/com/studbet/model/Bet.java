@@ -1,21 +1,39 @@
 package com.studbet.model;
 
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 
+@Entity
+@Table(name = "bets")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Bet {
-    private int id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "bet_id")
+    private Long id;
+    @Column(name = "bettor_id")
     private int bettorId;
+    @Column(name = "event_id")
     private int eventId;
+    @Column(name = "bet_amount")
     private int betAmount;
+    @Column(name = "status")
     private String status;
+    @Column(name = "payout_amount")
     private int payoutAmount;
+    @Column(name = "created_at")
     private LocalDateTime createdAt;
+    @Column(name = "resolved_at")
     private LocalDateTime resolvedAt;
+    @Column(name = "predicted_score_min")
     private int predictedScoreMin;
+    @Column(name = "predicted_score_max")
     private int predictedScoreMax;
-
-    public Bet() {
-    }
 
     public Bet(int bettorId, int eventId, int betAmount, String status, int payoutAmount, int predictedScoreMin, int predictedScoreMax) {
         this.bettorId = bettorId;
@@ -25,114 +43,5 @@ public class Bet {
         this.payoutAmount = payoutAmount;
         this.predictedScoreMin = predictedScoreMin;
         this.predictedScoreMax = predictedScoreMax;
-    }
-
-    public Bet(int id, int bettorId, int eventId, int betAmount, String status, int payoutAmount, LocalDateTime createdAt, LocalDateTime resolvedAt, int predictedScoreMin, int predictedScoreMax) {
-        this.id = id;
-        this.bettorId = bettorId;
-        this.eventId = eventId;
-        this.betAmount = betAmount;
-        this.status = status;
-        this.payoutAmount = payoutAmount;
-        this.createdAt = createdAt;
-        this.resolvedAt = resolvedAt;
-        this.predictedScoreMin = predictedScoreMin;
-        this.predictedScoreMax = predictedScoreMax;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public int getBettorId() {
-        return bettorId;
-    }
-
-    public void setBettorId(int bettorId) {
-        this.bettorId = bettorId;
-    }
-
-    public int getEventId() {
-        return eventId;
-    }
-
-    public void setEventId(int eventId) {
-        this.eventId = eventId;
-    }
-
-    public int getBetAmount() {
-        return betAmount;
-    }
-
-    public void setBetAmount(int betAmount) {
-        this.betAmount = betAmount;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public int getPayoutAmount() {
-        return payoutAmount;
-    }
-
-    public void setPayoutAmount(int payoutAmount) {
-        this.payoutAmount = payoutAmount;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public LocalDateTime getResolvedAt() {
-        return resolvedAt;
-    }
-
-    public void setResolvedAt(LocalDateTime resolvedAt) {
-        this.resolvedAt = resolvedAt;
-    }
-
-    public int getPredictedScoreMin() {
-        return predictedScoreMin;
-    }
-
-    public void setPredictedScoreMin(int predictedScoreMin) {
-        this.predictedScoreMin = predictedScoreMin;
-    }
-
-    public int getPredictedScoreMax() {
-        return predictedScoreMax;
-    }
-
-    public void setPredictedScoreMax(int predictedScoreMax) {
-        this.predictedScoreMax = predictedScoreMax;
-    }
-
-    @Override
-    public String toString() {
-        return "Bet{" +
-                "id=" + id +
-                ", bettorId=" + bettorId +
-                ", eventId=" + eventId +
-                ", betAmount=" + betAmount +
-                ", status='" + status + '\'' +
-                ", payoutAmount=" + payoutAmount +
-                ", createdAt=" + createdAt +
-                ", resolvedAt=" + resolvedAt +
-                ", predictedScoreMin=" + predictedScoreMin +
-                ", predictedScoreMax=" + predictedScoreMax +
-                '}';
     }
 }

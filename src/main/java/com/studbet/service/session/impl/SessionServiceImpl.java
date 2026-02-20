@@ -3,9 +3,11 @@ package com.studbet.service.session.impl;
 import com.studbet.security.session.UserSession;
 import com.studbet.service.session.SessionService;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
+import org.springframework.stereotype.Service;
 
+@Service
 public class SessionServiceImpl implements SessionService {
 
     @Override

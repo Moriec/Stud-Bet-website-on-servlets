@@ -6,12 +6,16 @@ import com.studbet.enums.TransactionType;
 import com.studbet.model.*;
 import com.studbet.service.bet.BetService;
 import com.studbet.util.calculator.NormalCalculator;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Service
+@RequiredArgsConstructor
 public class BetServiceImpl implements BetService {
 
     private final BetDao betDao;
@@ -20,15 +24,6 @@ public class BetServiceImpl implements BetService {
     private final SubjectDao subjectDao;
     private final TransactionDao transactionDao;
     private final NormalCalculator normalCalculator;
-
-    public BetServiceImpl(BetDao betDao, BettingEventDao bettingEventDao, UserDao userDao, SubjectDao subjectDao, TransactionDao transactionDao, NormalCalculator normalCalculator) {
-        this.betDao = betDao;
-        this.bettingEventDao = bettingEventDao;
-        this.userDao = userDao;
-        this.subjectDao = subjectDao;
-        this.transactionDao = transactionDao;
-        this.normalCalculator = normalCalculator;
-    }
 
     @Override
     public double calculateOdds(int betAmount, int predictedScoreMin, int predictedScoreMax, int maxScore) {
@@ -60,7 +55,7 @@ public class BetServiceImpl implements BetService {
 
     @Override
     public Bet placeBet(Bet bet, User user) {
-        BettingEvent event = bettingEventDao.findById(bet.getEventId());
+        BettingEvent event = bettingEventDao.findById(bet.getEventId()).orElse(null);
         if (event == null || !"OPEN".equals(event.getStatus())) {
             return null;
         }
@@ -69,7 +64,7 @@ public class BetServiceImpl implements BetService {
             return null;
         }
 
-        Subject subject = subjectDao.findById(event.getSubjectId());
+        Subject subject = subjectDao.findById(event.getSubjectId()).orElse(null);
         int maxScore = subject != null ? subject.getMaxScore() : 100;
 
         double odds = calculateOdds(bet.getBetAmount(), bet.getPredictedScoreMin(), bet.getPredictedScoreMax(), maxScore);
@@ -80,9 +75,9 @@ public class BetServiceImpl implements BetService {
         Bet savedBet = betDao.save(bet);
         
         if (savedBet != null) {
-            Transaction transaction = new Transaction(user.getId(), savedBet.getId(), TransactionType.BET_PLACED.name(), -savedBet.getBetAmount(), user.getBalance(), user.getBalance() - savedBet.getBetAmount(), "Ставка");
+            Transaction transaction = new Transaction(user.getId(), savedBet.getId().intValue(), TransactionType.BET_PLACED.name(), -savedBet.getBetAmount(), user.getBalance(), user.getBalance() - savedBet.getBetAmount(), "Ставка");
             user.setBalance(user.getBalance() - bet.getBetAmount());
-            user = userDao.update(user);
+            user = userDao.save(user);
             if(user != null) {
                 transactionDao.save(transaction);
             }
@@ -93,7 +88,7 @@ public class BetServiceImpl implements BetService {
 
     @Override
     public BettingEvent getBettingEventById(int eventId) {
-        return bettingEventDao.findById(eventId);
+        return bettingEventDao.findById(eventId).orElse(null);
     }
 
 
@@ -102,7 +97,7 @@ public class BetServiceImpl implements BetService {
         List<Map<String, Object>> result = new ArrayList<>();
 
         for (Bet bet : bets) {
-            BettingEvent event = bettingEventDao.findById(bet.getEventId());
+            BettingEvent event = bettingEventDao.findById(bet.getEventId()).orElse(null);
 
             Map<String, Object> betData = new HashMap<>();
             betData.put("bet", bet);

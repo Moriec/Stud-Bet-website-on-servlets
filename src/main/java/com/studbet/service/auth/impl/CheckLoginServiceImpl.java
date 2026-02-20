@@ -2,14 +2,14 @@ package com.studbet.service.auth.impl;
 
 import com.studbet.dao.UserDao;
 import com.studbet.service.auth.CheckLoginService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
+@Service
+@RequiredArgsConstructor
 public class CheckLoginServiceImpl implements CheckLoginService {
 
-    UserDao userDao;
-
-    public CheckLoginServiceImpl(UserDao userDao) {
-        this.userDao = userDao;
-    }
+    private final UserDao userDao;
 
     @Override
     public boolean checkUsername(String username) {

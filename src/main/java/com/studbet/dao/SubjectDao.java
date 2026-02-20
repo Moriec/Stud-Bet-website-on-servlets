@@ -1,14 +1,10 @@
 package com.studbet.dao;
 
+import com.studbet.dao.jooq.SubjectRepositoryJooq;
 import com.studbet.model.Subject;
+import org.springframework.data.jpa.repository.JpaRepository;
+import java.util.Optional;
 
-import java.util.List;
-
-public interface SubjectDao {
-    Subject save(Subject subject);
-    Subject update(Subject subject);
-    int delete(Subject subject);
-    Subject findById(int id);
-    List<Subject> getAll();
-    Subject findByCode(String code);
+public interface SubjectDao extends JpaRepository<Subject, Integer>, SubjectRepositoryJooq {
+    Optional<Subject> findByCode(String code);
 }

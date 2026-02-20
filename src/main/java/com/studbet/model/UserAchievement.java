@@ -1,51 +1,24 @@
 package com.studbet.model;
 
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 
+@Entity
+@Table(name = "user_achievements")
+@IdClass(UserAchievementId.class)
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class UserAchievement {
-    int userId;
-    int achievementId;
-    LocalDateTime earned_at;
-
-    public UserAchievement() {
-    }
-
-    public UserAchievement(int userId, int achievementId, LocalDateTime earned_at) {
-        this.userId = userId;
-        this.achievementId = achievementId;
-        this.earned_at = earned_at;
-    }
-
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
-
-    public int getAchievementId() {
-        return achievementId;
-    }
-
-    public void setAchievementId(int achievementId) {
-        this.achievementId = achievementId;
-    }
-
-    public LocalDateTime getEarned_at() {
-        return earned_at;
-    }
-
-    public void setEarned_at(LocalDateTime earned_at) {
-        this.earned_at = earned_at;
-    }
-
-    @Override
-    public String toString() {
-        return "UserAchievement{" +
-                "userId=" + userId +
-                ", achievementId=" + achievementId +
-                ", earned_at=" + earned_at +
-                '}';
-    }
+    @Id
+    @Column(name = "user_id")
+    private int userId;
+    @Id
+    @Column(name = "achievements_id")
+    private int achievementId;
+    @Column(name = "earned_at")
+    private LocalDateTime earnedAt;
 }
