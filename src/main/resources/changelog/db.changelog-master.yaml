@@ -1,0 +1,353 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1-create-db
+      author: dima
+      changes:
+        - createTable:
+            tableName: users
+            columns:
+              - column:
+                  name: user_id
+                  type: SERIAL
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: username
+                  type: VARCHAR(50)
+                  constraints:
+                    unique: true
+                    nullable: false
+              - column:
+                  name: email
+                  type: VARCHAR(100)
+                  constraints:
+                    unique: true
+                    nullable: false
+              - column:
+                  name: first_name
+                  type: VARCHAR(50)
+              - column:
+                  name: last_name
+                  type: VARCHAR(50)
+              - column:
+                  name: password_hash
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: role
+                  type: VARCHAR(20)
+                  defaultValue: USER
+              - column:
+                  name: balance
+                  type: INT
+                  defaultValueNumeric: 1000
+              - column:
+                  name: rating_points
+                  type: INT
+                  defaultValueNumeric: 0
+              - column:
+                  name: registration_date
+                  type: TIMESTAMP
+                  defaultValueComputed: CURRENT_TIMESTAMP
+              - column:
+                  name: last_login
+                  type: TIMESTAMP
+        - createTable:
+            tableName: subjects
+            columns:
+              - column:
+                  name: subject_id
+                  type: SERIAL
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: subject_name
+                  type: VARCHAR(100)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: subject_code
+                  type: VARCHAR(20)
+                  constraints:
+                    unique: true
+                    nullable: false
+              - column:
+                  name: description
+                  type: TEXT
+              - column:
+                  name: max_score
+                  type: INT
+                  defaultValueNumeric: 100
+
+        - createTable:
+            tableName: betting_events
+            columns:
+              - column:
+                  name: event_id
+                  type: SERIAL
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: target_user_id
+                  type: INT
+                  constraints:
+                    foreignKeyName: fk_event_target_user
+                    referencedTableName: users
+                    referencedColumnNames: user_id
+              - column:
+                  name: subject_id
+                  type: INT
+                  constraints:
+                    foreignKeyName: fk_event_subject
+                    referencedTableName: subjects
+                    referencedColumnNames: subject_id
+              - column:
+                  name: semester
+                  type: INT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: academic_year
+                  type: VARCHAR(20)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: event_type
+                  type: VARCHAR(50)
+              - column:
+                  name: status
+                  type: VARCHAR(20)
+                  defaultValue: OPEN
+              - column:
+                  name: description
+                  type: TEXT
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+                  defaultValueComputed: CURRENT_TIMESTAMP
+              - column:
+                  name: close_it
+                  type: TIMESTAMP
+
+        - createTable:
+            tableName: bets
+            columns:
+              - column:
+                  name: bet_id
+                  type: SERIAL
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: bettor_id
+                  type: INT
+                  constraints:
+                    foreignKeyName: fk_bet_bettor
+                    referencedTableName: users
+                    referencedColumnNames: user_id
+              - column:
+                  name: event_id
+                  type: INT
+                  constraints:
+                    foreignKeyName: fk_bet_event
+                    referencedTableName: betting_events
+                    referencedColumnNames: event_id
+              - column:
+                  name: bet_amount
+                  type: INT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: predicted_score_min
+                  type: INT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: predicted_score_max
+                  type: INT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: status
+                  type: VARCHAR(20)
+                  defaultValue: PENDING
+              - column:
+                  name: payout_amount
+                  type: INT
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+                  defaultValueComputed: CURRENT_TIMESTAMP
+              - column:
+                  name: resolved_at
+                  type: TIMESTAMP
+        - sql:
+            sql: ALTER TABLE bets ADD CONSTRAINT check_bet_amount CHECK (bet_amount > 0);
+
+        - createTable:
+            tableName: student_result
+            columns:
+              - column:
+                  name: result_id
+                  type: SERIAL
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: user_id
+                  type: INT
+                  constraints:
+                    foreignKeyName: fk_result_user
+                    referencedTableName: users
+                    referencedColumnNames: user_id
+              - column:
+                  name: subject_id
+                  type: INT
+                  constraints:
+                    foreignKeyName: fk_result_subject
+                    referencedTableName: subjects
+                    referencedColumnNames: subject_id
+              - column:
+                  name: actual_score
+                  type: INT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: semester
+                  type: INT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: academic_year
+                  type: VARCHAR(20)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: is_finelized
+                  type: BOOLEAN
+                  defaultValueBoolean: false
+        - addUniqueConstraint:
+            tableName: student_result
+            columnNames: user_id, subject_id, semester, academic_year
+            constraintName: uk_student_result
+
+        - createTable:
+            tableName: transactions
+            columns:
+              - column:
+                  name: transaction_id
+                  type: SERIAL
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: user_id
+                  type: INT
+                  constraints:
+                    foreignKeyName: fk_transaction_user
+                    referencedTableName: users
+                    referencedColumnNames: user_id
+              - column:
+                  name: related_bet_id
+                  type: INT
+                  constraints:
+                    foreignKeyName: fk_transaction_bet
+                    referencedTableName: bets
+                    referencedColumnNames: bet_id
+              - column:
+                  name: transaction_type
+                  type: VARCHAR(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: amount
+                  type: INT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: balance_before
+                  type: INT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: balance_after
+                  type: INT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: description
+                  type: TEXT
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+                  defaultValueComputed: CURRENT_TIMESTAMP
+
+        - createTable:
+            tableName: achievements
+            columns:
+              - column:
+                  name: achievements_id
+                  type: SERIAL
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: achevements_name
+                  type: VARCHAR(100)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: description
+                  type: TEXT
+              - column:
+                  name: icon_url
+                  type: VARCHAR(255)
+              - column:
+                  name: points_reward
+                  type: INT
+                  defaultValueNumeric: 0
+              - column:
+                  name: achievement_type
+                  type: VARCHAR(50)
+              - column:
+                  name: criteria_json
+                  type: TEXT
+
+        - createTable:
+            tableName: user_achievements
+            columns:
+              - column:
+                  name: user_id
+                  type: INT
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_ua_user
+                    referencedTableName: users
+                    referencedColumnNames: user_id
+              - column:
+                  name: achievements_id
+                  type: INT
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_ua_achievement
+                    referencedTableName: achievements
+                    referencedColumnNames: achievements_id
+              - column:
+                  name: earned_at
+                  type: TIMESTAMP
+                  defaultValueComputed: CURRENT_TIMESTAMP
+        - addPrimaryKey:
+            tableName: user_achievements
+            columnNames: user_id, achievements_id
+            constraintName: pk_user_achievements
+
+  - changeSet:
+      id: 2-fill-data
+      author: dima
+      changes:
+        - sqlFile:
+            path: db-sql-migration/fill-data.sql

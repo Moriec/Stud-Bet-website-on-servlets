@@ -51,7 +51,7 @@ docker-compose up --build
 
 ## База данных
 
-Структура базы данных автоматически создается при первом запуске через Docker Compose. SQL скрипт находится в flyway-migration/create_bd.sql.
+Структура базы данных автоматически создается при первом запуске через Docker Compose. SQL скрипт находится в flyway-migration/fill-data.sql.
 
 ### Основные таблицы:
 

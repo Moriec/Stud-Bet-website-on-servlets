@@ -23,6 +23,7 @@
         <maven.compiler.source>17</maven.compiler.source>
         <junit.version>5.10.2</junit.version>
         <postgresql.version>42.7.7</postgresql.version>
+        <jooq.version>3.18.7</jooq.version>
     </properties>
 
     <dependencies>
@@ -30,6 +31,12 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>org.liquibase</groupId>
+            <artifactId>liquibase-core</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-freemarker</artifactId>
@@ -124,6 +131,45 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
                 <version>3.3.2</version>
+            </plugin>
+            <plugin>
+                <groupId>org.jooq</groupId>
+                <artifactId>jooq-codegen-maven</artifactId>
+                <executions>
+                    <execution>
+                        <id>jooq-codegen</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <dependencies>
+                    <dependency>
+                        <groupId>com.h2database</groupId>
+                        <artifactId>h2</artifactId>
+                        <version>2.2.224</version>
+                    </dependency>
+                </dependencies>
+                <configuration>
+                    <jdbc>
+                        <driver>org.h2.Driver</driver>
+                        <url>jdbc:h2:mem:jooq_codegen;MODE=PostgreSQL;DATABASE_TO_LOWER=TRUE;DEFAULT_NULL_ORDERING=HIGH;INIT=RUNSCRIPT FROM 'flyway-migration/schema.sql'</url>
+                    </jdbc>
+                    <generator>
+                        <database>
+                            <name>org.jooq.meta.h2.H2Database</name>
+                            <includes>.*</includes>
+                            <excludes></excludes>
+                            <inputSchema>public</inputSchema>
+                            <outputSchemaToDefault>true</outputSchemaToDefault>
+                        </database>
+                        <target>
+                            <packageName>com.studbet.jooq.codegen</packageName>
+                            <directory>${project.build.directory}/generated-sources/jooq</directory>
+                        </target>
+                    </generator>
+                </configuration>
             </plugin>
         </plugins>
     </build>

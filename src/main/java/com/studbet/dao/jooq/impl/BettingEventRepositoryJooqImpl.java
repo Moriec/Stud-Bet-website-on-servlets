@@ -6,10 +6,11 @@ import com.studbet.enums.EventStatus;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.jooq.DSLContext;
-import org.jooq.impl.DSL;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+
+import static com.studbet.jooq.codegen.Tables.BETTING_EVENTS;
 
 @Repository
 @RequiredArgsConstructor
@@ -19,8 +20,8 @@ public class BettingEventRepositoryJooqImpl implements BettingEventRepositoryJoo
 
     @Override
     public List<BettingEvent> findAvailableEvents() {
-        return dsl.selectFrom(DSL.table("betting_events"))
-                .where(DSL.field("status").eq(EventStatus.OPEN.name()))
+        return dsl.selectFrom(BETTING_EVENTS)
+                .where(BETTING_EVENTS.STATUS.eq(EventStatus.OPEN.name()))
                 .fetchInto(BettingEvent.class);
     }
 }
