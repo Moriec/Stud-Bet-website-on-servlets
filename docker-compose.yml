@@ -12,7 +12,6 @@ services:
       - "5432:5432"
     volumes:
       - db_data:/var/lib/postgresql/data
-      - ./flyway-migration/fill-data.sql:/docker-entrypoint-initdb.d/init.sql
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U studbetuser -d studbetdb"]
       interval: 10s
@@ -25,6 +24,10 @@ services:
     depends_on:
       db:
         condition: service_healthy
+    environment:
+      STUDBET_DB_URL: jdbc:postgresql://db:5432/studbetdb
+      DB_USER: studbetuser
+      DB_PASSWORD: studbetpass
     ports:
       - "8080:8080"
 
